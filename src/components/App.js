@@ -4,13 +4,14 @@ import { auth } from '../fbase';
 import { updateCurrentUser } from 'firebase/auth';
 
 function App() {
-	// console.log(authService.currentUser);
 	const [init, setInit] = useState(false);
 	const [userObj, setUserObj] = useState(null);
 	useEffect(() => {
 		auth.onAuthStateChanged((user) => {
 			if (user) {
 				setUserObj(user);
+			} else {
+				setUserObj(null);
 			}
 			setInit(true);
 		});
