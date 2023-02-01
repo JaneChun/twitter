@@ -5,15 +5,11 @@ import { auth } from '../fbase';
 function App() {
 	// console.log(authService.currentUser);
 	const [init, setInit] = useState(false);
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [userObj, setUserObj] = useState(null);
 	useEffect(() => {
 		auth.onAuthStateChanged((user) => {
 			if (user) {
-				setIsLoggedIn(true);
 				setUserObj(user);
-			} else {
-				setIsLoggedIn(false);
 			}
 			setInit(true);
 		});
@@ -22,7 +18,7 @@ function App() {
 		<div>
 			{init ? (
 				<>
-					<AppRouter isLoggedIn={isLoggedIn} userObj={userObj} />
+					<AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} />
 					<footer>&copy; Twitter {new Date().getFullYear()}</footer>
 				</>
 			) : (
