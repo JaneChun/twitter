@@ -5,7 +5,7 @@ import { auth } from '../fbase';
 const Auth = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [newAccount, setNewAccount] = useState(true);
+	const [newAccount, setNewAccount] = useState(false);
 	const [error, setError] = useState('');
 
 	// input 핸들러
@@ -24,15 +24,15 @@ const Auth = () => {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			let data;
+			let user;
 			// 신규 사용자 등록
 			if (newAccount) {
-				const data = await createUserWithEmailAndPassword(auth, email, password);
+				user = await createUserWithEmailAndPassword(auth, email, password);
 				// 기존 사용자 로그인
 			} else {
-				const data = await signInWithEmailAndPassword(auth, email, password);
+				user = await signInWithEmailAndPassword(auth, email, password);
 			}
-			console.log('data', data);
+			console.log('user', user);
 		} catch (error) {
 			setError(error.message);
 		}
@@ -56,8 +56,8 @@ const Auth = () => {
 			provider = new GithubAuthProvider();
 			provider.addScope('repo');
 		}
-		const data = await signInWithPopup(auth, provider);
-		console.log('data', data);
+		const user = await signInWithPopup(auth, provider);
+		console.log('user', user);
 	};
 
 	return (

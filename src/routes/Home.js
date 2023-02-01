@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { db } from 'fbase';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, onSnapshot, query, orderBy } from 'firebase/firestore';
+import Tweet from 'components/Tweet';
 
-const Home = () => {
+const Home = ({ userObj }) => {
 	const [tweet, setTweet] = useState('');
 	const [tweets, setTweets] = useState([]);
 
+	// 실시간으로 데이터를 데이터베이스에서 가져오기
 	useEffect(() => {
-		getTweets();
-	}, []);
-
-	// 트윗 불러오기
-	const getTweets = async () => {
-		const data = await getDocs(collection(db, 'Tweets'));
-		data.forEach((doc) => {
-			const tweetObject = {
-				...doc.data(),
-				id: doc.id,
-			};
-			setTweets((prev) => [tweetObject, ...prev]);
+		const q = query(collection(db, 'Tweets'), orderBy('createdAt', 'desc'));
+		const unsubscribe = onSnapshot(q, (querySnapshot) => {
+			const newArr = querySnapshot.docs.map((doc) => {
+				return {
+					...doc.data(),
+					id: doc.id,
+				};
+			});
+			setTweets(newArr);
 		});
-	};
+	}, []);
 
 	// input 핸들러
 	const onChange = (e) => {
@@ -37,6 +36,7 @@ const Home = () => {
 			const docRef = await addDoc(collection(db, 'Tweets'), {
 				text: tweet,
 				createdAt: Date.now(),
+				creatorId: userObj.uid,
 			});
 			console.log('Document written with ID: ', docRef.id);
 		} catch (error) {
@@ -45,7 +45,7 @@ const Home = () => {
 
 		setTweet('');
 	};
-	console.log(tweets);
+	console.log('tweets', tweets);
 	return (
 		<>
 			Home
@@ -54,14 +54,9 @@ const Home = () => {
 				<input type='submit' value='Tweet' />
 			</form>
 			<div>
-				{tweets.map((tweet) => {
-					return (
-						<div key={tweet.id}>
-							<h4>{tweet.test}</h4>
-							<span>{tweet.createdAt}</span>
-						</div>
-					);
-				})}
+				{tweets.map((tweet) => (
+					<Tweet key={tweet.id} tweetObj={tweet} isCreator={tweet.creatorId === userObj.uid} />
+				))}
 			</div>
 		</>
 	);
