@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AppRouter from 'components/Router';
 import { auth } from '../fbase';
+import { updateCurrentUser } from 'firebase/auth';
 
 function App() {
 	// console.log(authService.currentUser);
@@ -14,11 +15,16 @@ function App() {
 			setInit(true);
 		});
 	}, []);
+
+	const refreshUser = async () => {
+		await updateCurrentUser(auth, auth.currentUser);
+		setUserObj(auth.currentUser);
+	};
 	return (
 		<div>
 			{init ? (
 				<>
-					<AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} />
+					<AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} />
 					<footer>&copy; Twitter {new Date().getFullYear()}</footer>
 				</>
 			) : (
