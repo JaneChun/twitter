@@ -43,13 +43,49 @@ const AuthForm = () => {
 
 	return (
 		<>
-			<form onSubmit={onSubmit}>
-				<input name='email' type='text' placeholder='Email' required value={email} onChange={onChange} />
-				<input name='password' type='password' placeholder='Password' required value={password} onChange={onChange} />
-				<input type='submit' value={newAccount ? 'Create Account' : 'Sign In'} />
-				{error}
+			<form className='w-full flex-col ' onSubmit={onSubmit}>
+				<div className='w-full'>
+					<label className='pl-1 block text-gray-700' htmlFor='email'>
+						Email
+					</label>
+					<input
+						className='w-full my-5 px-4 py-3 rounded-lg bg-slate-100 mt-2 border focus:border-gray-500 focus:bg-white focus:outline-none'
+						name='email'
+						type='text'
+						placeholder='Email'
+						required
+						value={email}
+						onChange={onChange}
+					/>
+				</div>
+				<div>
+					<label className='pl-1 block text-gray-700' htmlFor='password'>
+						Password
+					</label>
+					<input
+						className='w-full my-5 px-4 py-3 rounded-lg bg-slate-100 mt-2 border focus:border-gray-500 focus:bg-white focus:outline-none'
+						name='password'
+						type='password'
+						placeholder='Password'
+						required
+						value={password}
+						onChange={onChange}
+					/>
+				</div>
+				<input
+					className='hover:cursor-pointer w-full block bg-gray-900 hover:bg-gray-700 focus:hover:bg-gray-800 text-white font-semibold rounded-lg
+              px-4 py-3 mt-6'
+					type='submit'
+					value={newAccount ? 'Create Account' : 'Log In'}
+				/>
+				<div className='mt-1 text-center text-red-500 text-sm'>{error && error.split('auth/')[1].slice(0, -2)}</div>
 			</form>
-			<span onClick={toggleAccount}>{newAccount ? 'Sign In' : 'Create Account'}</span>
+			<div
+				className='hover:cursor-pointer py-2 text-center text-sm font-semibold text-gray-700 hover:text-gray-900 focus:text-gray-900'
+				onClick={toggleAccount}
+			>
+				{newAccount ? 'Already have an account?' : 'Create Account'}
+			</div>
 		</>
 	);
 };
