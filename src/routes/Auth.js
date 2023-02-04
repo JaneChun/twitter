@@ -28,7 +28,7 @@ const Auth = () => {
 			<div className='p-10 h-screen relative'>
 				<div className='my-5 flex-col text-center font-bold text-3xl'>
 					<span>
-						<Icon className='mx-auto mb-5' icon='uit:twitter-alt' font-size='40px' />
+						<Icon className='mx-auto mb-5' icon='uit:twitter-alt' fontSize='40px' />
 					</span>
 					<h1>Gwitter</h1>
 				</div>

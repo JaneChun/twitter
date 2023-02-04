@@ -1,18 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Icon } from '@iconify/react';
 
 const Navigation = ({ userObj }) => {
 	return (
-		<>
-			<ul>
-				<li>
-					<Link to='/'>Home</Link>
+		<div>
+			<ul className='absolute bottom-0 w-full p-5 flex justify-between bg-white'>
+				<li className='text-3xl'>
+					<Link to='/'>
+						<Icon className='hover:scale-90 focus:scale-90' icon='bxs:home-circle' />
+					</Link>
 				</li>
 				<li>
-					<Link to='/profile'>{userObj.displayName}의 Profile</Link>
+					<Link to='/profile'>
+						<div className='w-7 h-7 rounded-full overflow-hidden bg-gray-200'>
+							<img src={userObj.photoURL} />
+						</div>
+					</Link>
 				</li>
 			</ul>
-		</>
+		</div>
 	);
 };
 

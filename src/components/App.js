@@ -22,14 +22,13 @@ function App() {
 		setUserObj(auth.currentUser);
 	};
 	return (
-		<div>
+		<div className='w-screen h-screen'>
 			{init ? (
-				<>
+				<div className='relative h-full'>
 					<AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} />
-					<footer>&copy; Twitter {new Date().getFullYear()}</footer>
-				</>
+				</div>
 			) : (
-				<div>initializing..</div>
+				<div className='h-full flexjustify-center items-center text-gray-400'>Loading...</div>
 			)}
 		</div>
 	);

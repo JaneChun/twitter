@@ -4,6 +4,9 @@ import { signOut, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import Tweet from 'components/Tweet';
+import Navigation from 'components/Navigation';
+import { checkSVG } from 'components/Tweet';
+import { Icon } from '@iconify/react';
 
 const Profile = ({ userObj, refreshUser }) => {
 	const navigate = useNavigate();
@@ -56,24 +59,58 @@ const Profile = ({ userObj, refreshUser }) => {
 	};
 
 	return (
-		<>
-			My Profile
-			<button onClick={onLogOutClick}>Log Out</button>
-			{isEditing ? (
-				<form onSubmit={onSubmit}>
-					<input value={newNickname} onChange={onChange} type='text' placeholder='Edit your Nickname' required />
-					<input type='submit' value='edit' />
-				</form>
-			) : (
-				<div>
-					{userObj.displayName}
-					<button onClick={toggleEditing}>Edit Nickname</button>
+		<div className='flex flex-col h-full justify-between'>
+			{/* 헤더 */}
+			<div className='py-2 border-b'>
+				<Icon onClick={() => navigate('/')} className='mx-auto hover:cursor-pointer' icon='uit:twitter-alt' fontSize='40px' />
+			</div>
+			{/* 프로필 */}
+			<div className='p-5 flex'>
+				{/* LEFT BOX */}
+				<div className='flex-grow'>
+					<img className='rounded-full w-14' src={userObj.photoURL} />
+					{isEditing ? (
+						<form className='mt-2 flex justify-between items-center' onSubmit={onSubmit}>
+							<input
+								className='flex-grow mr-2 py-2 px-3 rounded-md shadow-sm focus:outline-none resize-none border'
+								value={newNickname}
+								onChange={onChange}
+								type='text'
+								placeholder='Edit your Nickname'
+								required
+							/>
+							<input
+								className='px-3 py-2 rounded-md text-sm text-gray-600 hover:cursor-pointer bg-gray-100 hover:bg-gray-200 focus:hover:bg-gray-200'
+								type='submit'
+								value='수정'
+							/>
+						</form>
+					) : (
+						<div className='flex'>
+							<h4 className='my-2 font-semibold text-xl'>{userObj.displayName}</h4>
+							<div className='w-4 ml-1 my-auto'>{checkSVG}</div>
+						</div>
+					)}
 				</div>
-			)}
-			{myTweets.map((tweet) => (
-				<Tweet key={tweet.id} tweetObj={tweet} isCreator={tweet.creatorId === userObj.uid} />
-			))}
-		</>
+				{!isEditing && (
+					<div className='flex flex-col justify-center'>
+						<button className='mb-2 px-3 py-1 rounded-full text-sm border hover:bg-gray-100 focus:bg-gray-100' onClick={toggleEditing}>
+							프로필 수정
+						</button>
+						<button className='px-3 py-1 rounded-full text-sm border hover:bg-gray-100 focus:bg-gray-100' onClick={onLogOutClick}>
+							로그아웃
+						</button>
+					</div>
+				)}
+			</div>
+
+			<div className='overflow-y-scroll flex-grow p-5'>
+				{myTweets.map((tweet) => (
+					<Tweet key={tweet.id} tweetObj={tweet} isCreator={tweet.creatorId === userObj.uid} />
+				))}
+			</div>
+			<Navigation userObj={userObj} />
+		</div>
 	);
 };
 

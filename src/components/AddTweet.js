@@ -3,6 +3,7 @@ import { db, storage } from 'fbase';
 import { collection, addDoc } from 'firebase/firestore';
 import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
+import { Icon } from '@iconify/react';
 
 const AddTweet = ({ userObj }) => {
 	const [tweet, setTweet] = useState('');
@@ -35,6 +36,8 @@ const AddTweet = ({ userObj }) => {
 			text: tweet,
 			createdAt: Date.now(),
 			creatorId: userObj.uid,
+			displayName: userObj.displayName,
+			photoURL: userObj.photoURL,
 			fileUrl,
 		};
 
@@ -71,15 +74,45 @@ const AddTweet = ({ userObj }) => {
 	const onClearAttachment = () => setAttachment(null);
 
 	return (
-		<form onSubmit={onSubmit}>
-			<input value={tweet} onChange={onChange} type='text' placeholder="What's happening?" maxLength={120} required />
-			<input onChange={onFileChange} type='file' accept='image/*' />
-			<input type='submit' value='Tweet' />
+		<form className='p-5' onSubmit={onSubmit}>
+			<div className='font-bold ml-1 mb-1 text-gray-700'>Tweet</div>
+			<div className='relative'>
+				<textarea
+					className='w-full mt-1 py-2 px-3 rounded-md shadow-sm focus:outline-none resize-none border'
+					rows='4'
+					value={tweet}
+					onChange={onChange}
+					type='text'
+					placeholder="What's happening?"
+					maxLength={280}
+					required
+				/>
+				<div>
+					<label htmlFor='input-file'>
+						{!attachment && (
+							<span className='cursor-pointer'>
+								<Icon icon='mdi:image-plus-outline' fontSize='20px' />
+							</span>
+						)}
+					</label>
+					<input className='hidden' id='input-file' onChange={onFileChange} type='file' accept='image/*' />
+				</div>
+
+				<input
+					className='absolute px-3 py-1 rounded-md text-sm text-white hover:cursor-pointer bg-gray-900 hover:bg-gray-700 focus:hover:bg-gray-700 right-2 top-20'
+					type='submit'
+					value='Tweet'
+				/>
+			</div>
 			{attachment && (
-				<>
-					<img src={attachment} width='50px' height='50px' />
-					<button onClick={onClearAttachment}>clear</button>
-				</>
+				<div className='w-16 h-16 relative group cursor-pointer'>
+					<img className='rounded-lg' src={attachment} />
+					<button onClick={onClearAttachment}>
+						<span className='text-white hidden group-hover:block'>
+							<Icon className='absolute top-1 right-0' icon='mdi:delete' fontSize='20px' />
+						</span>
+					</button>
+				</div>
 			)}
 		</form>
 	);

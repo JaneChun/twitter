@@ -3,6 +3,8 @@ import { db, storage } from 'fbase';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import Tweet from 'components/Tweet';
 import AddTweet from 'components/AddTweet';
+import Navigation from 'components/Navigation';
+import { Icon } from '@iconify/react';
 
 const Home = ({ userObj }) => {
 	const [tweets, setTweets] = useState([]);
@@ -22,15 +24,18 @@ const Home = ({ userObj }) => {
 	}, []);
 
 	return (
-		<>
-			Home
-			<div>
-				<AddTweet userObj={userObj} />
+		<div className='flex flex-col max-h-screen justify-between'>
+			<div className='py-2 border-b'>
+				<Icon className='mx-auto' icon='uit:twitter-alt' fontSize='40px' />
+			</div>
+			<AddTweet userObj={userObj} />
+			<div className='p-5 overflow-y-scroll flex-grow'>
 				{tweets.map((tweet) => (
 					<Tweet key={tweet.id} tweetObj={tweet} isCreator={tweet.creatorId === userObj.uid} />
 				))}
 			</div>
-		</>
+			<Navigation userObj={userObj} />
+		</div>
 	);
 };
 

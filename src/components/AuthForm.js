@@ -73,7 +73,7 @@ const AuthForm = () => {
 					/>
 				</div>
 				<input
-					className='hover:cursor-pointer w-full block bg-gray-900 hover:bg-gray-700 focus:hover:bg-gray-800 text-white font-semibold rounded-lg
+					className='hover:cursor-pointer w-full block bg-gray-900 hover:bg-gray-700 focus:hover:bg-gray-700 text-white font-semibold rounded-lg
               px-4 py-3 mt-6'
 					type='submit'
 					value={newAccount ? 'Create Account' : 'Log In'}
