@@ -1,5 +1,5 @@
 import React from 'react';
-import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
+import { signInWithRedirect, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
 import { auth } from '../fbase';
 import AuthForm from 'components/AuthForm';
 import { Icon } from '@iconify/react';
@@ -20,7 +20,7 @@ const Auth = () => {
 			provider = new GithubAuthProvider();
 			provider.addScope('repo');
 		}
-		const user = await signInWithPopup(auth, provider);
+		const user = await signInWithRedirect(auth, provider);
 	};
 
 	return (

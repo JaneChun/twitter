@@ -101,7 +101,7 @@ const Tweet = ({ tweetObj, isCreator }) => {
 			) : (
 				<div className='flex'>
 					{/* LEFT BOX */}
-					<div className='p-2'>
+					<div className='p-2 flex-none'>
 						<img className='rounded-full w-10' src={tweetObj.photoURL ? tweetObj.photoURL : emptyImg} />
 					</div>
 
