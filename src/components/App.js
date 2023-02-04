@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AppRouter from 'components/Router';
 import { auth } from '../fbase';
 import { updateCurrentUser } from 'firebase/auth';
+import { updateProfile } from 'firebase/auth';
 
 function App() {
 	const [init, setInit] = useState(false);
@@ -10,6 +11,9 @@ function App() {
 		auth.onAuthStateChanged((user) => {
 			if (user) {
 				setUserObj(user);
+				if (!user.displayName) {
+					updateProfile(user, { displayName: user.email.split('@')[0] });
+				}
 			} else {
 				setUserObj(null);
 			}

@@ -3,6 +3,7 @@ import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db, storage } from 'fbase';
 import { ref, deleteObject } from 'firebase/storage';
 import { Icon } from '@iconify/react';
+import emptyImg from '../images/empty-profile.jpeg';
 
 const Tweet = ({ tweetObj, isCreator }) => {
 	const [isEditing, setIsEditing] = useState(false); // 편집
@@ -54,7 +55,7 @@ const Tweet = ({ tweetObj, isCreator }) => {
 		setIsEditing(false);
 		setIsModalOpen(false);
 	};
-
+	console.log(tweetObj);
 	return (
 		<div className='border-b' key={tweetObj.id}>
 			{isEditing ? (
@@ -63,7 +64,7 @@ const Tweet = ({ tweetObj, isCreator }) => {
 						<div className='flex'>
 							{/* LEFT BOX */}
 							<div className='p-2'>
-								<img className='rounded-full w-10' src={tweetObj.photoURL} />
+								<img className='rounded-full w-10' src={tweetObj.photoURL ? tweetObj.photoURL : emptyImg} />
 							</div>
 
 							{/* RIGHT BOX */}
@@ -101,7 +102,7 @@ const Tweet = ({ tweetObj, isCreator }) => {
 				<div className='flex'>
 					{/* LEFT BOX */}
 					<div className='p-2'>
-						<img className='rounded-full w-10' src={tweetObj.photoURL} />
+						<img className='rounded-full w-10' src={tweetObj.photoURL ? tweetObj.photoURL : emptyImg} />
 					</div>
 
 					{/* RIGHT BOX */}
@@ -110,7 +111,7 @@ const Tweet = ({ tweetObj, isCreator }) => {
 						<div className='flex justify-between'>
 							<div className='my-1 flex'>
 								<h4 className='font-semibold text-md'>{tweetObj.displayName}</h4>
-								<div className='w-4 ml-1 my-auto'>{checkSVG}</div>
+								{tweetObj.photoURL && <div className='w-4 ml-1 my-auto'>{checkSVG}</div>}
 							</div>
 
 							{isCreator && (

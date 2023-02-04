@@ -7,6 +7,7 @@ import Tweet from 'components/Tweet';
 import Navigation from 'components/Navigation';
 import { checkSVG } from 'components/Tweet';
 import { Icon } from '@iconify/react';
+import emptyImg from '../images/empty-profile.jpeg';
 
 const Profile = ({ userObj, refreshUser }) => {
 	const navigate = useNavigate();
@@ -68,7 +69,7 @@ const Profile = ({ userObj, refreshUser }) => {
 			<div className='p-5 flex'>
 				{/* LEFT BOX */}
 				<div className='flex-grow'>
-					<img className='rounded-full w-14' src={userObj.photoURL} />
+					<img className='rounded-full w-14' src={userObj.photoURL ? userObj.photoURL : emptyImg} />
 					{isEditing ? (
 						<form className='mt-2 flex justify-between items-center' onSubmit={onSubmit}>
 							<input
@@ -88,7 +89,7 @@ const Profile = ({ userObj, refreshUser }) => {
 					) : (
 						<div className='flex'>
 							<h4 className='my-2 font-semibold text-xl'>{userObj.displayName}</h4>
-							<div className='w-4 ml-1 my-auto'>{checkSVG}</div>
+							{userObj.photoURL && <div className='w-4 ml-1 my-auto'>{checkSVG}</div>}
 						</div>
 					)}
 				</div>
