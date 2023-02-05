@@ -14,6 +14,7 @@ const Profile = ({ userObj, refreshUser }) => {
 	const [myTweets, setMyTweets] = useState([]);
 	const [isEditing, setIsEditing] = useState(false); // 편집
 	const [newNickname, setNewNickname] = useState(userObj.displayName); // input
+	const [selected, setSelected] = useState('tweet');
 
 	useEffect(() => {
 		getMyTweets();
@@ -59,6 +60,8 @@ const Profile = ({ userObj, refreshUser }) => {
 		navigate('/');
 	};
 
+	const creationTime = new Date(userObj.metadata.creationTime);
+
 	return (
 		<div className='flex flex-col h-full justify-between'>
 			{/* 헤더 */}
@@ -87,10 +90,18 @@ const Profile = ({ userObj, refreshUser }) => {
 							/>
 						</form>
 					) : (
-						<div className='flex'>
-							<h4 className='my-2 font-semibold text-xl'>{userObj.displayName}</h4>
-							{userObj.photoURL && <div className='w-4 ml-1 my-auto'>{checkSVG}</div>}
-						</div>
+						<>
+							<div className='flex'>
+								<h4 className='my-2 font-semibold text-xl'>{userObj.displayName}</h4>
+								{userObj.photoURL && <div className='w-4 ml-1 my-auto'>{checkSVG}</div>}
+							</div>
+							<div className='text-xs text-gray-400 flex'>
+								<Icon className='my-auto mr-1' icon='material-symbols:calendar-month-outline' />
+								<div>
+									{creationTime.getFullYear()}년 {creationTime.getMonth()}월에 가입함
+								</div>
+							</div>
+						</>
 					)}
 				</div>
 				{!isEditing && (
@@ -104,6 +115,27 @@ const Profile = ({ userObj, refreshUser }) => {
 					</div>
 				)}
 			</div>
+
+			<nav className='flex text-sm text-gray-500 font-semibold justify-between border-b cursor-pointer'>
+				<div
+					className={selected === 'tweet' ? 'p-1 border-b-4 border-gray-800 flex-1 text-center' : 'p-1 flex-1 text-center'}
+					onClick={() => setSelected('tweet')}
+				>
+					트윗
+				</div>
+				<div
+					className={selected === 'media' ? 'p-1 border-b-4 border-gray-800 flex-1 text-center' : 'p-1 flex-1 text-center'}
+					onClick={() => setSelected('media')}
+				>
+					미디어
+				</div>
+				<div
+					className={selected === 'like' ? 'p-1 border-b-4 border-gray-800 flex-1 text-center' : 'p-1 flex-1 text-center'}
+					onClick={() => setSelected('like')}
+				>
+					마음에 들어요
+				</div>
+			</nav>
 
 			<div className='overflow-y-scroll flex-grow p-5'>
 				{myTweets.map((tweet) => (
