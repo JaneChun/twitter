@@ -1,29 +1,32 @@
-import React from 'react';
-import { signInWithRedirect, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
+import React, { useEffect } from 'react';
+import { signInWithRedirect, getRedirectResult, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
 import { auth } from '../fbase';
 import AuthForm from 'components/AuthForm';
 import { Icon } from '@iconify/react';
 
 const Auth = () => {
+	useEffect(() => {
+		getResult();
+	}, []);
+
+	const getResult = async () => {
+		const user = await getRedirectResult(auth);
+		console.log('user', user);
+	};
+
 	// 소셜 로그인
-	const onSocialClick = async (e) => {
-		const {
-			target: { name },
-		} = await e;
+	const onGoogleClick = async (e) => {
+		let provider = new GoogleAuthProvider();
+		provider.addScope('profile');
+		provider.addScope('email');
+		await signInWithRedirect(auth, provider);
+	};
 
-		if (name === 'google') {
-			const provider = await new GoogleAuthProvider();
-			provider.addScope('profile');
-			provider.addScope('email');
-			const user = await signInWithRedirect(auth, provider);
-		}
-
-		if (name === 'github') {
-			const provider = await new GithubAuthProvider();
-			provider.addScope('profile');
-			provider.addScope('email');
-			const user = await signInWithRedirect(auth, provider);
-		}
+	const onGithubClick = async (e) => {
+		let provider = new GithubAuthProvider();
+		provider.addScope('profile');
+		provider.addScope('email');
+		await signInWithRedirect(auth, provider);
 	};
 
 	return (
@@ -39,7 +42,7 @@ const Auth = () => {
 				<div>
 					<button
 						className='flex justify-center my-3 w-full bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300'
-						onClick={onSocialClick}
+						onClick={onGoogleClick}
 						name='google'
 					>
 						<span className='my-1 mr-1.5'>
@@ -49,7 +52,7 @@ const Auth = () => {
 					</button>
 					<button
 						className='flex justify-center my-3 w-full bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300'
-						onClick={onSocialClick}
+						onClick={onGithubClick}
 						name='github'
 					>
 						<span className='my-1 mr-2'>

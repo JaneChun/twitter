@@ -12,7 +12,11 @@ function App() {
 			if (user) {
 				setUserObj(user);
 				if (!user.displayName) {
-					updateProfile(user, { displayName: user.email.split('@')[0] });
+					if (user.email) {
+						updateProfile(user, { displayName: user.email.split('@')[0] });
+					} else {
+						updateProfile(user, { displayName: user.reloadUserInfo.screenName });
+					}
 				}
 			} else {
 				setUserObj(null);
