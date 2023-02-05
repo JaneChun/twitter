@@ -6,7 +6,7 @@ import emptyImg from '../images/empty-profile.jpeg';
 const Navigation = ({ userObj }) => {
 	return (
 		<div>
-			<ul className='absolute bottom-0 border-t w-full p-5 flex justify-between bg-white'>
+			<ul className='border-t w-full p-5 flex justify-between bg-white'>
 				<li className='text-3xl'>
 					<Link to='/'>
 						<Icon className='hover:scale-90 focus:scale-90' icon='bxs:home-circle' />

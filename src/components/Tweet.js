@@ -57,7 +57,7 @@ const Tweet = ({ tweetObj, isCreator }) => {
 	};
 	console.log(tweetObj);
 	return (
-		<div className='border-b' key={tweetObj.id}>
+		<div className='border-b last-of-type:border-none' key={tweetObj.id}>
 			{isEditing ? (
 				<>
 					{isCreator && (
