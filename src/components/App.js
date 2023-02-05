@@ -30,9 +30,9 @@ function App() {
 		setUserObj(auth.currentUser);
 	};
 	return (
-		<div className='w-screen h-screen'>
+		<div className='w-full h-screen md:w-2/3 lg:w-1/2 xl:w-1/3'>
 			{init ? (
-				<div className='relative h-full'>
+				<div>
 					<AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} />
 				</div>
 			) : (

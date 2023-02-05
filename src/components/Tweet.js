@@ -81,13 +81,14 @@ const Tweet = ({ tweetObj, isCreator }) => {
 									/>
 
 									<div className='mt-2 flex justify-end'>
-										<input
-											className='mr-1 px-2 py-1 rounded-md text-sm text-gray-600 hover:cursor-pointer bg-gray-100 hover:bg-gray-200 focus:hover:bg-gray-200'
-											type='submit'
-											value='수정'
-										/>
 										<button
-											className='px-2 py-1 rounded-md text-sm text-gray-600 hover:cursor-pointer bg-gray-100 hover:bg-gray-200 focus:hover:bg-gray-200'
+											className='mr-1 px-2 py-1 rounded-md text-sm text-gray-600 bg-gray-100 hover:bg-gray-200 focus:hover:bg-gray-200'
+											type='submit'
+										>
+											수정
+										</button>
+										<button
+											className='px-2 py-1 rounded-md text-sm text-gray-600 bg-gray-100 hover:bg-gray-200 focus:hover:bg-gray-200'
 											onClick={cancelEdit}
 										>
 											취소
@@ -120,11 +121,11 @@ const Tweet = ({ tweetObj, isCreator }) => {
 										<Icon icon='mdi:dots-horizontal' fontSize='20px' />
 									</button>
 									{isModalOpen && (
-										<div className='overflow-hidden absolute top-5 right-0 flex flex-col rounded-lg bg-white border border-gray-300'>
-											<button className='hover:bg-gray-100 py-2 px-3 border-t text-sm whitespace-nowrap' onClick={toggleEditing}>
+										<div className='z-10 overflow-hidden absolute top-5 right-0 flex flex-col rounded-lg bg-white border border-gray-300'>
+											<button className='hover:bg-gray-100 py-2 px-3 text-sm whitespace-nowrap' onClick={toggleEditing}>
 												트윗 수정하기
 											</button>
-											<button className='hover:bg-gray-100 py-2 px-3 text-sm whitespace-nowrap' onClick={onDeleteClick}>
+											<button className='hover:bg-gray-100 py-2 px-3 border-t text-sm whitespace-nowrap' onClick={onDeleteClick}>
 												트윗 삭제하기
 											</button>
 										</div>

@@ -24,7 +24,7 @@ const Home = ({ userObj }) => {
 	}, []);
 
 	return (
-		<div className='flex flex-col max-h-screen justify-between'>
+		<div className='h-screen flex flex-col justify-between bg-white'>
 			<div className='py-2 border-b'>
 				<Icon className='mx-auto' icon='uit:twitter-alt' fontSize='40px' />
 			</div>
