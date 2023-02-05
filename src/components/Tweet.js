@@ -64,7 +64,7 @@ const Tweet = ({ tweetObj, isCreator }) => {
 						<div className='flex'>
 							{/* LEFT BOX */}
 							<div className='p-2'>
-								<img className='rounded-full w-10' src={tweetObj.photoURL ? tweetObj.photoURL : emptyImg} />
+								<img className='rounded-full w-10 h-10 object-cover' src={tweetObj.photoURL ? tweetObj.photoURL : emptyImg} />
 							</div>
 
 							{/* RIGHT BOX */}
@@ -103,7 +103,7 @@ const Tweet = ({ tweetObj, isCreator }) => {
 				<div className='flex'>
 					{/* LEFT BOX */}
 					<div className='p-2 flex-none'>
-						<img className='rounded-full w-10' src={tweetObj.photoURL ? tweetObj.photoURL : emptyImg} />
+						<img className='rounded-full w-10 h-10 object-cover' src={tweetObj.photoURL ? tweetObj.photoURL : emptyImg} />
 					</div>
 
 					{/* RIGHT BOX */}

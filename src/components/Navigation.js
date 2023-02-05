@@ -14,9 +14,7 @@ const Navigation = ({ userObj }) => {
 				</li>
 				<li>
 					<Link to='/profile'>
-						<div className='w-7 h-7 rounded-full overflow-hidden bg-gray-200'>
-							<img src={userObj.photoURL ? userObj.photoURL : emptyImg} />
-						</div>
+						<img className='w-7 h-7 object-cover rounded-full' src={userObj.photoURL ? userObj.photoURL : emptyImg} />
 					</Link>
 				</li>
 			</ul>

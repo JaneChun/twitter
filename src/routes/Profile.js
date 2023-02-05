@@ -118,7 +118,10 @@ const Profile = ({ userObj, refreshUser }) => {
 							</div>
 
 							<div className='relative'>
-								<img className='mb-5 rounded-full w-14' src={attachment ? attachment : userObj.photoURL ? userObj.photoURL : emptyImg} />
+								<img
+									className='mb-5 rounded-full w-14 h-14 object-cover'
+									src={attachment ? attachment : userObj.photoURL ? userObj.photoURL : emptyImg}
+								/>
 								<label className='absolute top-4 left-3.5 cursor-pointer' htmlFor='profile-input-file'>
 									<Icon icon='mdi:camera-plus-outline' fontSize='25px' color='white' />
 								</label>
@@ -145,7 +148,7 @@ const Profile = ({ userObj, refreshUser }) => {
 				) : (
 					<>
 						<div className='flex-grow'>
-							<img className='rounded-full w-14' src={userObj.photoURL ? userObj.photoURL : emptyImg} />
+							<img className='rounded-full w-14 h-14 object-cover' src={userObj.photoURL ? userObj.photoURL : emptyImg} />
 							<div className='flex'>
 								<h4 className='my-2 font-semibold text-xl'>{userObj.displayName}</h4>
 								{userObj.photoURL && <div className='w-4 ml-1 my-auto'>{checkSVG}</div>}
