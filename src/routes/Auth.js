@@ -16,9 +16,10 @@ const Auth = () => {
 			provider = new GoogleAuthProvider();
 			provider.addScope('profile');
 			provider.addScope('email');
-		} else if (name === 'github') {
+		} else {
 			provider = new GithubAuthProvider();
-			provider.addScope('repo');
+			provider.addScope('profile');
+			provider.addScope('email');
 		}
 		const user = await signInWithRedirect(auth, provider);
 	};
