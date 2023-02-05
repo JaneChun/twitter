@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth, db } from '../fbase';
 import { signOut, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
 import Tweet from 'components/Tweet';
 import Navigation from 'components/Navigation';
 import { checkSVG } from 'components/Tweet';
@@ -20,11 +20,10 @@ const Profile = ({ userObj, refreshUser }) => {
 		getMyTweets();
 	}, []);
 
+	// 실시간으로 데이터를 데이터베이스에서 가져오기
 	const getMyTweets = async () => {
 		const q = query(collection(db, 'Tweets'), where('creatorId', '==', userObj.uid), orderBy('createdAt', 'desc'));
-
-		const querySnapshot = await getDocs(q);
-		querySnapshot.forEach((doc) => {
+		const unsubscribe = onSnapshot(q, (querySnapshot) => {
 			const newArr = querySnapshot.docs.map((doc) => {
 				return {
 					...doc.data(),
