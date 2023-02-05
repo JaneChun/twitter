@@ -9,19 +9,21 @@ const Auth = () => {
 	const onSocialClick = async (e) => {
 		const {
 			target: { name },
-		} = e;
-		let provider;
+		} = await e;
+
 		if (name === 'google') {
-			// Creates the provider object.
-			provider = new GoogleAuthProvider();
+			const provider = await new GoogleAuthProvider();
 			provider.addScope('profile');
 			provider.addScope('email');
-		} else {
-			provider = new GithubAuthProvider();
-			provider.addScope('profile');
-			provider.addScope('email');
+			const user = await signInWithRedirect(auth, provider);
 		}
-		const user = await signInWithRedirect(auth, provider);
+
+		if (name === 'github') {
+			const provider = await new GithubAuthProvider();
+			provider.addScope('profile');
+			provider.addScope('email');
+			const user = await signInWithRedirect(auth, provider);
+		}
 	};
 
 	return (
