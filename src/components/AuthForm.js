@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { auth } from '../fbase';
+import { auth, db } from '../fbase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { setDoc, doc } from 'firebase/firestore';
 
 const AuthForm = () => {
 	const [email, setEmail] = useState('');
@@ -28,6 +29,24 @@ const AuthForm = () => {
 			// 신규 사용자 등록
 			if (newAccount) {
 				user = await createUserWithEmailAndPassword(auth, email, password);
+				const userObj = {
+					email: user.user.email,
+					displayName: user.user.displayName ? user.user.displayName : user.user.email.split('@')[0],
+					createdAt: user.user.metadata.creationTime,
+					photoURL: user.user.photoURL
+						? user.user.photoURL
+						: 'https://firebasestorage.googleapis.com/v0/b/twitter-87d63.appspot.com/o/empty-profile.jpeg?alt=media&token=443a5601-13eb-444a-9e7d-1262492a8376',
+					accessToken: user.user.accessToken,
+					uid: user.user.uid,
+					bio: null,
+				};
+				console.log('userObj', userObj);
+
+				try {
+					await setDoc(doc(db, 'Users', userObj.email), userObj);
+				} catch (error) {
+					console.error('Error adding user: ', error);
+				}
 				// 기존 사용자 로그인
 			} else {
 				user = await signInWithEmailAndPassword(auth, email, password);

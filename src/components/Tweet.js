@@ -3,7 +3,6 @@ import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db, storage } from 'fbase';
 import { ref, deleteObject } from 'firebase/storage';
 import { Icon } from '@iconify/react';
-import emptyImg from '../images/empty-profile.jpeg';
 
 const Tweet = ({ tweetObj, isCreator }) => {
 	const [isEditing, setIsEditing] = useState(false); // 편집
@@ -39,9 +38,9 @@ const Tweet = ({ tweetObj, isCreator }) => {
 			try {
 				// db에서 트윗 삭제
 				await deleteDoc(newTweetRef);
-				if (tweetObj.fileUrl) {
+				if (tweetObj.fileURL) {
 					// storage에서 이미지 파일 삭제
-					const desertRef = ref(storage, tweetObj.fileUrl);
+					const desertRef = ref(storage, tweetObj.fileURL);
 					await deleteObject(desertRef);
 					setIsModalOpen(false);
 				}
@@ -64,7 +63,7 @@ const Tweet = ({ tweetObj, isCreator }) => {
 						<div className='flex'>
 							{/* LEFT BOX */}
 							<div className='p-2'>
-								<img className='rounded-full w-10 h-10 object-cover' src={tweetObj.photoURL ? tweetObj.photoURL : emptyImg} />
+								<img className='rounded-full w-10 h-10 object-cover' src={tweetObj.photoURL} />
 							</div>
 
 							{/* RIGHT BOX */}
@@ -103,7 +102,7 @@ const Tweet = ({ tweetObj, isCreator }) => {
 				<div className='flex'>
 					{/* LEFT BOX */}
 					<div className='p-2 flex-none'>
-						<img className='rounded-full w-10 h-10 object-cover' src={tweetObj.photoURL ? tweetObj.photoURL : emptyImg} />
+						<img className='rounded-full w-10 h-10 object-cover' src={tweetObj.photoURL} />
 					</div>
 
 					{/* RIGHT BOX */}
@@ -136,9 +135,9 @@ const Tweet = ({ tweetObj, isCreator }) => {
 
 						{/* BODY */}
 						<div className='my-1'>{tweetObj.text}</div>
-						{tweetObj.fileUrl && (
+						{tweetObj.fileURL && (
 							<div>
-								<img className='rounded-xl h-64 w-full object-cover' src={tweetObj.fileUrl} />
+								<img className='rounded-xl h-64 w-full object-cover' src={tweetObj.fileURL} />
 							</div>
 						)}
 					</div>

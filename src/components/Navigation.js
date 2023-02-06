@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import emptyImg from '../images/empty-profile.jpeg';
 
-const Navigation = ({ userObj }) => {
+const Navigation = ({ profile }) => {
 	return (
 		<div>
 			<ul className='border-t w-full px-5 py-4 flex justify-between bg-white'>
@@ -14,7 +13,7 @@ const Navigation = ({ userObj }) => {
 				</li>
 				<li>
 					<Link to='/profile'>
-						<img className='w-7 h-7 object-cover rounded-full' src={userObj.photoURL ? userObj.photoURL : emptyImg} />
+						<img className='w-7 h-7 object-cover rounded-full' src={profile?.photoURL} />
 					</Link>
 				</li>
 			</ul>

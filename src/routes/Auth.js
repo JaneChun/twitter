@@ -6,15 +6,13 @@ import { Icon } from '@iconify/react';
 
 const Auth = () => {
 	useEffect(() => {
-		getResult();
+		getUserResult();
 	}, []);
 
-	const getResult = async () => {
+	const getUserResult = async () => {
 		const user = await getRedirectResult(auth);
-		console.log('user', user);
 	};
 
-	// 소셜 로그인
 	const onGoogleClick = async (e) => {
 		let provider = new GoogleAuthProvider();
 		provider.addScope('profile');

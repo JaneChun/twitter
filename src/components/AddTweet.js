@@ -5,7 +5,7 @@ import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { Icon } from '@iconify/react';
 
-const AddTweet = ({ userObj }) => {
+const AddTweet = ({ profile }) => {
 	const [tweet, setTweet] = useState('');
 	const [attachment, setAttachment] = useState(null);
 
@@ -20,25 +20,25 @@ const AddTweet = ({ userObj }) => {
 	// 트윗 추가
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		let fileUrl = null;
+		let fileURL = null;
 
 		if (attachment) {
 			// 파일 참조 생성
-			const fileRef = ref(storage, `${userObj.email}/${uuidv4()}`);
+			const fileRef = ref(storage, `${profile.email}/${uuidv4()}`);
 			// 파일 업로드
 			const response = await uploadString(fileRef, attachment, 'data_url');
 			// 파일 다운로드
-			fileUrl = await getDownloadURL(ref(storage, fileRef));
+			fileURL = await getDownloadURL(ref(storage, fileRef));
 		}
 
 		// 트윗 객체
 		const tweetObj = {
 			text: tweet,
 			createdAt: Date.now(),
-			creatorId: userObj.uid,
-			displayName: userObj.displayName,
-			photoURL: userObj.photoURL,
-			fileUrl,
+			creatorId: profile.uid,
+			displayName: profile.displayName,
+			photoURL: profile.photoURL,
+			fileURL,
 		};
 
 		// 서버에 업로드
